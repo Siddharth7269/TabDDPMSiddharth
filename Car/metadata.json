@@ -1,0 +1,62 @@
+{
+    "original_columns": [
+        "Buying",
+        "Maint",
+        "Doors",
+        "Persons",
+        "Lug_boot",
+        "Safety",
+        "Class"
+    ],
+    "categorical_columns": [
+        "Buying",
+        "Maint",
+        "Doors",
+        "Persons",
+        "Lug_boot",
+        "Safety",
+        "Class"
+    ],
+    "encoding_method": "ordinal",
+    "mappings": {
+        "Buying": [
+            "high",
+            "low",
+            "med",
+            "vhigh"
+        ],
+        "Maint": [
+            "high",
+            "low",
+            "med",
+            "vhigh"
+        ],
+        "Doors": [
+            "2",
+            "3",
+            "4",
+            "5more"
+        ],
+        "Persons": [
+            "2",
+            "4",
+            "more"
+        ],
+        "Lug_boot": [
+            "big",
+            "med",
+            "small"
+        ],
+        "Safety": [
+            "high",
+            "low",
+            "med"
+        ],
+        "Class": [
+            "acc",
+            "good",
+            "unacc",
+            "vgood"
+        ]
+    }
+}

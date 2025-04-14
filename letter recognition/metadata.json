@@ -1,0 +1,32 @@
+{
+    "original_columns": [
+        "xbox",
+        "ybox",
+        "width",
+        "height",
+        "onpix",
+        "xbar",
+        "ybar",
+        "x2bar",
+        "y2bar",
+        "xybar",
+        "x2ybar",
+        "xy2bar",
+        "xedge",
+        "xedgey",
+        "yedge",
+        "yedgex",
+        "letter"
+    ],
+    "categorical_columns": [
+        "letter"
+    ],
+    "encoding_method": "ordinal",
+    "mappings": {
+        "letter": [
+            "A",
+            "B",
+            "C"
+        ]
+    }
+}

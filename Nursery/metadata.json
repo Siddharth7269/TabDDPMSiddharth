@@ -1,0 +1,77 @@
+{
+    "original_columns": [
+        " parents",
+        "has_nurs",
+        "form",
+        "children",
+        "housing",
+        "finance",
+        "social",
+        "health",
+        "Target"
+    ],
+    "categorical_columns": [
+        " parents",
+        "has_nurs",
+        "form",
+        "children",
+        "housing",
+        "finance",
+        "social",
+        "health",
+        "Target"
+    ],
+    "encoding_method": "ordinal",
+    "mappings": {
+        " parents": [
+            "great_pret",
+            "pretentious",
+            "usual"
+        ],
+        "has_nurs": [
+            "critical",
+            "improper",
+            "less_proper",
+            "proper",
+            "very_crit"
+        ],
+        "form": [
+            "complete",
+            "completed",
+            "foster",
+            "incomplete"
+        ],
+        "children": [
+            "1",
+            "2",
+            "3",
+            "more"
+        ],
+        "housing": [
+            "convenient",
+            "critical",
+            "less_conv"
+        ],
+        "finance": [
+            "convenient",
+            "inconv"
+        ],
+        "social": [
+            "nonprob",
+            "problematic",
+            "slightly_prob"
+        ],
+        "health": [
+            "not_recom",
+            "priority",
+            "recommended"
+        ],
+        "Target": [
+            "not_recom",
+            "priority",
+            "recommend",
+            "spec_prior",
+            "very_recom"
+        ]
+    }
+}

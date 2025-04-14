@@ -1,0 +1,133 @@
+=============================================
+        TabDDPM & TSTR Evaluation Script
+=============================================
+Using device: cuda
+
+Hyperparameters:
+  T: 1000
+  beta_start: 0.0001
+  beta_end: 0.02
+  data_file: pre_processed.csv
+  epochs: 30
+  batch_size: 128
+  learning_rate: 0.0002
+  hidden_dim: 256
+  num_residual_blocks: 4
+  time_emb_dim: 128
+  num_syn_samples: None
+  output_file: synthetic_data.csv
+  skip_tstr: False
+---------------------------------------------
+Loading dataset from: pre_processed.csv
+Whitespace delimiter failed, trying comma delimiter...
+Dataset loaded successfully with shape: (2291, 17)
+
+Real dataset shape: (2291, 17)
+Will generate 2291 synthetic samples.
+---------------------------------------------
+
+Starting Diffusion Model Training...
+Starting TabDDPM training with ComplexMLP (4 blocks)...
+Epoch [1/30], Loss: 0.874845
+Epoch [10/30], Loss: 0.348444
+Epoch [20/30], Loss: 0.311451
+Epoch [30/30], Loss: 0.278957
+TabDDPM training complete!
+---------------------------------------------
+
+Starting Synthetic Data Generation...
+Starting sampling for 2291 samples using ComplexMLP...
+  Generating batch 1/9 (size 256)...
+  Generating batch 2/9 (size 256)...
+  Generating batch 3/9 (size 256)...
+  Generating batch 4/9 (size 256)...
+  Generating batch 5/9 (size 256)...
+  Generating batch 6/9 (size 256)...
+  Generating batch 7/9 (size 256)...
+  Generating batch 8/9 (size 256)...
+  Generating batch 9/9 (size 243)...
+Sampling complete.
+Post-processing synthetic data (rounding target column)...
+  Unique target values in generated data after rounding: [-51. -39. -27. -23. -20. -11.  -8.  -7.  -6.  -5.  -4.  -3.  -2.  -1.
+   0.   1.   2.   3.   4.   5.   6.   7.   8.   9.  10.  11.  12.  14.
+  17.  20.  22.  23.  28.  63.]
+Synthetic dataset saved to synthetic_data.csv
+---------------------------------------------
+
+--- Starting Verbose TSTR Evaluation ---
+
+[Step 1: Data Preparation & Class Alignment]
+Processing real data...
+  Real data shapes: X_real=(2291, 16), y_real=(2291,)
+  Unique real target classes found: [0 1 2]
+Processing synthetic data and aligning classes...
+  Unique synthetic target values (after rounding, before alignment): [-51 -39 -27 -23 -20 -11  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3
+   4   5   6   7   8   9  10  11  12  14  17  20  22  23  28  63]
+  Aligning rounded synthetic targets to the nearest class in [0 1 2]...
+  Synthetic data shapes after alignment: X_syn=(2291, 16), y_syn=(2291,)
+  Unique synthetic target classes (after alignment): [0 1 2]
+
+[Step 2: Feature Scaling]
+Initializing StandardScaler...
+Fitting StandardScaler on synthetic features (X_syn)...
+Transforming synthetic features (X_syn)...
+Transforming real features (X_real) using the same scaler...
+Feature scaling complete.
+
+***** TSTR Evaluation: Training on aligned synthetic, testing on real data *****
+
+===== [MLP Classifier Evaluation] =====
+Initializing MLPClassifier...
+
+Starting MLP training on scaled aligned synthetic data (X_syn_scaled, y_syn)...
+
+MLP training finished.
+Evaluating MLP on scaled real data (X_real_scaled)...
+--> MLP Classifier Accuracy on Real Data: 0.8944
+----------------------------------------
+
+===== [XGBoost Classifier Evaluation] =====
+Initializing XGBoost Classifier...
+  Using objective: 'multi:softprob', eval_metric: 'mlogloss' for 3 classes.
+  Mapped target labels for XGBoost training/evaluation to range 0..2
+
+Starting XGBoost training on scaled aligned synthetic data (X_syn_scaled, y_syn_mapped)...
+
+XGBoost training finished.
+Evaluating XGBoost on scaled real data (X_real_scaled)...
+--> XGBoost Classifier Accuracy on Real Data: 0.9144
+----------------------------------------
+
+===== [Random Forest Classifier Evaluation] =====
+Initializing Random Forest Classifier...
+
+Starting Random Forest training on scaled aligned synthetic data (X_syn_scaled, y_syn)...
+
+Random Forest training finished.
+Evaluating Random Forest on scaled real data (X_real_scaled)...
+--> Random Forest Classifier Accuracy on Real Data: 0.9096
+----------------------------------------
+
+===== [Logistic Regression Evaluation] =====
+Initializing Logistic Regression...
+
+Starting Logistic Regression training on scaled aligned synthetic data (X_syn_scaled, y_syn)...
+
+Logistic Regression training finished.
+Evaluating Logistic Regression on scaled real data (X_real_scaled)...
+--> Logistic Regression Accuracy on Real Data: 0.8581
+----------------------------------------
+
+***** End of Verbose TSTR Evaluation *****
+
+
+Final TSTR Accuracies Summary:
+---------------------------------------------
+  MLP: 0.8944
+  XGBoost: 0.9144
+  RandomForest: 0.9096
+  LogisticRegression: 0.8581
+---------------------------------------------
+
+Script finished.
+=============================================
